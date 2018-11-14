@@ -14,5 +14,8 @@ public class ViewsController{
     public String userIndex(@PathVariable String path) {
         return path;
     }
-
+    @RequestMapping("/")
+    public String userIndex() {
+        return "index";
+    }
 }
