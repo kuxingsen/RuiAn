@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title></title>
+ 		<link rel="stylesheet" href="/static_user/css/all.css" />
+ 		<script type="text/javascript" src="/static_user/js/jquery-3.3.1.js"></script>
+
+		
+		<script type="text/javascript">
+			//显示子菜单
+			function showSubMenu(li) {
+				var subMenu = li.getElementsByTagName("ul")[0];
+				subMenu.style.display = "block";
+			}
+
+			//隐藏子菜单
+			function hideSubMenu(li) {
+				var subMenu = li.getElementsByTagName("ul")[0];
+				subMenu.style.display = "none";
+			}
+			function changeBodyPage(id, pageId) {
+				$("#frame_body").load("col_news.html",{colId:"3"});
+			
+			}
+		 </script>
+
+</head>
+
+	<body>
+		 <div style="border-bottom: 5px solid #123683;">
+			<img src="/static_user/img/logo.png" style="height: 100px; display:inline-block;margin:0;padding:0;float:left;"/>
+			<ul id="navigation" > </ul>
+			<div></div>
+		</div> 
+	</body>
+	
+		 <script>
+//获取所有栏目
+  $(document).ready(function(){ 
+			 $.ajax({
+					type:"GET",
+					url:"/selectColumn",//地址改名
+					dataType:"json",
+					success:function(data){
+						//获取所有栏目
+						var cols=data.datas;
+						$('#navigation').empty();	  
+						//遍历参数data
+						   var html = "<li><a href='index'>首页</a></li>";
+			                for(var i=0;i<cols.length;i++){    //遍历data数组
+			                        var ls = cols[i];
+								if(ls.name=="解决方案") {
+                                        html += "<li><a href='col_news.html?colId=" + ls.id + "&superId=" + ls.id + "'>" + ls.name + "</a></li>\n"
+                                    }
+                              else  if(ls.name=="产品介绍") {
+                                    html += "<li><a href='col_news.html?colId=" + ls.id + "&superId=" + ls.id + "'>" + ls.name + "</a></li>\n"
+                                }
+
+								else {
+                                        html +="<li><a href='col_news.html?colId="+ls.id+"&superId="+ls.superId+"'>"+ls.name+"</a></li>\n"
+
+                                    }
+			                }
+
+			                    $("#navigation").html(html); //在html页面id=text1的标签里显示html内容
+			                },
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+
+		}			
+			 });
+	   })
+  		 </script>
+
+</html>

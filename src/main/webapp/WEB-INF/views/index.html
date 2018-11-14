@@ -1,0 +1,47 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title></title>
+
+	<script type="text/javascript" src="/static_user/js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+			$("#frame_top").load("frame_top.html");
+			
+			$("#frame_banner").load("frame_banner.html");
+ 			
+
+			$("#frame_news1").load("frame_news.html");
+			$("#frame_news2").load("frame_project.html");
+			$("#frame_news3").load("frame_product.html"); 
+			$("#frame_news4").load("frame_research.html"); 
+			
+			$("#frame_botton").load("frame_bottom.html");
+	});
+	</script>
+</head>
+
+<body >
+	<div id="fram_main" >
+		<div id="frame_top" ></div>
+		
+		<div id="frame_body">   
+			<div id="frame_banner" style="margin-bottom: 100px;"> </div>
+
+			<div style="display: block; ">
+				<div id="frame_news1" style="float:left; width: 50%"> </div>
+				<div id="frame_news2"  style="float:right; width: 50% " > </div>
+			</div>
+
+			<div style="display: block;">
+				<div id="frame_news3" style="float:left; width: 50%"> </div>
+				<div id="frame_news4"  style="float:right; width: 50% " > </div>
+			</div>
+			
+		</div>
+		
+		<div id="frame_botton" style="margin-top: 300px;" ></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title></title>
+	 	<link rel="stylesheet" href="/static_user/css/default.min.css?t=227" />
+
+		<script type="text/javascript" src="/static_user/ui_lib/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="/static_user/js/amazeui.min.js"></script>
+		 
+
+	</head>
+
+<body>
+	<div class="am-cf" ></div>
+	<div  class="am-slider am-slider-default" data-am-flexslider="{playAfterPaused: 8000}" >
+		 <ul class="am-slides"  style="border-bottom: 5px solid #123683;">
+			 <li id="li0"><img height="550px" src="/static_user/img/test5.jpg"></li>
+			<li id="li1"><img height="550px" src="/static_user/img/test5.jpg"></li>
+			<li id="li2"><img height="550px" src="/static_user/img/test5.jpg"></li>
+			<li id="li3"><img height="550px" src="/static_user/img/test5.jpg"></li>
+			<li id="li4"><img height="550px" src="/static_user/img/test5.jpg"></li>
+			
+			<!--
+			<li id="li1"></li>
+			<li id="li2"></li>
+			<li id="li3"></li>
+			<li id="li4"></li>  -->
+			
+		</ul> 
+	</div>
+</body>
+       <script>
+  $(document).ready(function(){
+			 $.ajax({
+					type:"GET",
+					url:"/selectBanner",//地址改名
+					dataType:"json",	
+					success:function(data){
+						//获取所有轮播图
+						var imgs=data.datas;
+					
+						//遍历参数data						   
+			                for(var i=0;i<imgs.length;i++){    //遍历data数组
+			                	var liId="#li"+i;
+			                	$(liId).html("");
+			                    var ls = imgs[i];
+			                   var html="<a href='info?messageId="+ls.id+"&colId="+ls.colId+"'><img height='550px' src='"+ls.titleImg+"'/></a>";
+		                        $(liId).html(html)
+
+ 						}
+	               
+			        },
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+		//	alert(XMLHttpRequest.status);//状态码
+		   
+		}			
+			 });
+	   })
+  		 </script>       
+</html>

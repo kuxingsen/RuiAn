@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title></title>
+
+		<script type="text/javascript" src="/static_user/js/jquery-3.3.1.js"></script>
+		<link rel="stylesheet" href="/static_user/css/all.css" />
+
+
+	</head>
+
+	<body>
+
+			<div class="frame_x">
+			<h1>
+				———<img  src="/static_user/img/project.png" > 工程案例———
+			 </h1>
+				<ul id="frame_2"> </ul>
+			</div>
+
+	</body>
+ 
+ <script type="text/javascript">
+$(document).ready(function(){
+			 $.ajax({
+					type:"GET",
+					url:"/selectMessageByColumnId",
+					data:{columnId:"2",page:"",count:""},
+					dataType:"json",	
+					success:function(data){
+						//获取5张工程案例的信息
+						var projects=data.datas;
+						//获取所有collist
+						$('#frame_2').empty();
+						//遍历参数data
+						   var html = "";
+			                for(var i=0;i<projects.length;i++){    //遍历data数组
+			                        var ls = projects[i];
+			               				html +="<li><a href='info"+"?messageId="+ls.id+"&colId=2"+ "'><span>"+ls.title+"</span><em>"+ls.date+"</em></a></li>\n";
+
+			                }		
+			                  $("#frame_2").html(html);
+					},
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+			//alert(XMLHttpRequest.status);//状态码
+		
+		}			
+			 });
+	   })
+ </script> 
+<!-- 	   
+<script type="text/javascript">
+$(document).ready(function(){
+			 $.ajax({
+					type:"GET",
+					url:"/Ruian/selectMessageByColumnId",
+					data:{columnId:"3",page:"",count:""},
+					dataType:"json",	
+					success:function(data){
+						//获取5张新闻资讯的信息
+						var imgs=data.datas;
+						//获取所有collist
+						$('#frame_2').empty();
+						//遍历参数data
+						   var html = "";
+			                for(var i=0;i<imgs.length;i++){    //遍历data数组
+			                        var ls = imgs[i];
+html +="<li><a href='col_news_info.html"+"?messageId="+ls.id+ "' target='_blank'><span>"+ls.title+"</span><em>"+ls.date+"</em></a></li>\n";
+			                   }		
+			               
+			                  $("#frame_2").html(html);
+					},
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+			alert(XMLHttpRequest.status);//状态码
+		
+		}			
+			 });
+	   })
+	   </script>
+	 -->
+</html>

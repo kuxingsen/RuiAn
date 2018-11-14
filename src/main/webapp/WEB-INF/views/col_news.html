@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<title>新闻中心</title>
+
+<link rel="stylesheet" href="/static_user/css/all.css" />
+<script type="text/javascript" src="/static_user/js/jquery-3.3.1.js"></script>
+
+
+</head>
+
+<body>
+
+	<div id="news_top"></div>
+
+	<div id="left">
+		<div class="info-left">
+			<h1 id="Name">——新闻资讯——</h1>
+
+			<ul id="Child">
+				<!--<li><a href="#"
+					onclick="changeBodyPage('#frame_body', 'col_news.html')">公司新闻</a>
+				</li>
+				<li><a href="#"
+					onclick="changeBodyPage('#frame_body', 'col_news.html')">产品资讯</a>
+				</li>
+				<li><a href="#"
+					onclick="changeBodyPage('#frame_body', 'col_news.html')">营销动态</a>
+				</li>-->
+
+			</ul>
+		</div>
+	</div>
+
+
+	<div class=" info-right">
+		<div class="info-right-title">
+			<a href="#"></a> <span id="colName">公司新闻</span>
+		</div>
+
+		<div id="frame_news_body" >
+			<ul class="info-right-list">
+				<li id="center-ul">				
+				</li>
+			</ul>
+		</div>
+
+		<div class="page-list ">
+			<ul class="pagination">
+
+			</ul>
+		</div>
+	</div>
+
+	<div>
+		<ul>
+		</ul>
+	</div>
+
+	
+	<script>
+
+
+    	
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null)
+				return unescape(r[2]);
+			return null;
+		}
+
+		$("#news_top").load("frame_top.html")
+		var columnId = GetQueryString("colId");
+		//判断一栏或两栏*!/
+		var superId=GetQueryString("superId");
+
+		if(superId=="null"){
+			$("#left").empty();
+		}
+
+		sessionStorage.setItem("index", columnId);
+    	var map={
+    		    1:'公司简介',
+    		    2:'工程案例',
+    		    3:'新闻资讯',
+    		    4:'产品介绍',
+    		    5:'产学研',
+    		    6:'服务外包',
+    		    7:'合作伙伴',
+    		    8:'产学研',
+    		    9:'解决方案'
+    		};
+    	if(columnId!=1){
+    	$("#Name").html(map[columnId]);
+		$("#colName").html(map[columnId]);
+    	}
+		//公司的话只显示公司的文章
+		/*if(columnId==1){
+    		window.location.href='info.html?messageId=11';
+    	}*/
+    	
+		 //获取解决方案的二级栏目
+		  if(superId!="null"){
+		  getChild();
+		  }
+		  else{
+			  toPage(1);
+		  }  
+		  function getChild() {
+			  $.ajax({
+				url:'/selectColumn',
+				type:'GET',
+				data:{superColumnId:columnId},
+				success:function(res){
+                  //  alert(res.code);
+					if(res.code==200){
+						$('#Child').empty();
+				  	childs=res.datas;
+				 // 	alert(childs[0].name);
+					html="";
+					columnId=childs[0].name;
+				    toPage(1);
+				  //  alert(childs.length)
+					for (var i = 0; i < childs.length; i++) {
+						var child_name = childs[i].name;
+						var child_id=childs[i].id;
+						//alert(child_id);
+						html+="<li><a onclick='childNew("+childs[i].id+")'"+">"+child_name+"</a></li>";
+
+					}
+					//alert(html);
+					$("#Child").html(html);
+						childNew(childs[0].id);
+                    }
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown){
+				//	alert(XMLHttpRequest.status);//状态码
+				
+				}		  
+			  })
+		  
+		}
+
+        $(document).ready(function(){
+				childNew();
+
+
+        });
+            function childNew(colId) {
+				columnId=colId;
+				//alert(columnId);
+				toPage(1);
+		  }
+		
+		  
+		  
+		toPage(1);
+		function toPage(pageNum) {
+			// 发送ajax请求
+			$.ajax({
+						url : '/selectMessageByColumnId',
+						type : 'GET',
+						data : {
+							columnId : columnId,
+							page : pageNum
+						},
+						success : function(res) {
+							if (res.code === 200) {
+								// 清空列表, 重新更新
+								$("#center-ul").empty();
+								$('.pagination').empty();
+								var list = res.datas;
+                                if(columnId==1){
+                                    window.location.href='info.html?messageId='+list[0].id;
+                                }
+                                var id=columnId;
+                            		 // alert(id+"id");
+								for (var i = 0; i < list.length; i++) {
+									$("#center-ul")
+											.append(
+													"<div><img src='"+list[i].titleImgPath+ "'>"+"<a href='info?messageId="
+															+ list[i].id
+															+ "&colId="+columnId+"'>"+list[i].title
+															+ "</a><span>"+list[i].date
+															+ "</span>"
+															+ '</div>\n');
+								}
+								var totalPage = res.totalPage;
+
+								var pagenation = $('.pagination');
+								pagenation
+										.append('<a href="javascript:;" class="num" onclick="toPage(1)">&laquo </a>');
+								if (pageNum == 1 || pageNum == 2) {
+									// 输出5个数字
+									for (var i = 1; i <= 5 && i <= totalPage; i++) {
+										if (i == pageNum) {
+											pagenation
+													.append('<a href="javascript:;" class="num">'
+															+ i + '</a>');
+										} else {
+											pagenation
+													.append('<a href="javascript:;" onclick="toPage('
+															+ i
+															+ ')">'
+															+ i
+															+ '</a>');
+										}
+									}
+								} else if (pageNum == totalPage - 1
+										|| pageNum == totalPage) {
+									// 输出5个数字
+									for (var i = totalPage - 4; i <= totalPage; i++) {
+										if (i < 1) {
+											continue;
+										}
+										if (i == pageNum) {
+											pagenation
+													.append('<a href="javascript:;" class="num">'
+															+ i + '</a>');
+										} else {
+											pagenation
+													.append('<a href="javascript:;" onclick="toPage('
+															+ i
+															+ ')">'
+															+ i
+															+ '</a>');
+										}
+									}
+								} else {
+									// 在中间
+									for (var i = pageNum - 2; i <= pageNum + 2
+											&& i <= totalPage; i++) {
+										if (i == pageNum) {
+											pagenation
+													.append('<a href="javascript:;" class="num">'
+															+ i + '</a>');
+										} else {
+											pagenation
+													.append('<a href="javascript:;" onclick="toPage('
+															+ i
+															+ ')">'
+															+ i
+															+ '</a>');
+										}
+									}
+								}
+								pagenation
+										.append('<a href="javascript:;" class="num" onclick="toPage('
+												+ totalPage + ')"> &raquo;</a>')
+							}
+						}
+					})
+		}
+	</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title></title>
+
+		<script type="text/javascript" src="/static_user/js/jquery-3.3.1.js"></script>
+		<link rel="stylesheet" href="/static_user/css/all.css" />
+
+
+	</head>
+
+	<body>
+
+			<div class="frame_x">
+				<h1> 
+					 ———&nbsp;<img  src="/static_user/img/news.png" > 新闻资讯 ———
+				</h1> 
+				<ul id="frame_1"> </ul>
+			</div>
+
+	</body>
+
+ 
+<script type="text/javascript">
+$(document).ready(function(){
+			 $.ajax({
+					type:"GET",
+					url:"/selectMessageByColumnId",
+					data:{columnId:"3",page:"",count:""},
+					dataType:"json",	
+					success:function(data){
+						//获取5张新闻资讯的信息
+						var imgs=data.datas;
+						//获取所有collist
+						$('#frame_1').empty();
+						//遍历参数data
+						   var html = "";
+			                for(var i=0;i<imgs.length;i++){    //遍历data数组
+			                        var ls = imgs[i];
+html +="<li><a href='info.html"+"?messageId="+ls.id+ "&colId=3" +"' ><span>"+ls.title+"</span><em>"+ls.date+"</em></a></li>\n";
+			                   }		
+			               
+			                  $("#frame_1").html(html);
+					},
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+			//alert(XMLHttpRequest.status);//状态码
+		
+		}			
+			 });
+	   })
+	   </script>
+	  
+</html>
