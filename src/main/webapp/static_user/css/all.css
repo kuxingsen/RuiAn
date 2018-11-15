@@ -277,7 +277,6 @@ footer {
 	cursor:pointer;
 }
 .info-right-list li div:hover{
-    color: #fff;
     background: #eaefff;
 }
 
@@ -296,7 +295,13 @@ footer {
 	font-size:30px;
 	position: absolute;
 	color: #123683;
+
+	height: 160px;
+	width: 100%;
 }
+/*.info-right-list li div a:hover{
+    background: #eaefff;
+}*/
 .info-right-list li div a::before {
 	content: "▶";
 	font-family: iconfont;
@@ -315,7 +320,7 @@ footer {
 	color:#123683;
 }
 	
-*/
+
 /********************跳转页面右*****************************/
 
 
