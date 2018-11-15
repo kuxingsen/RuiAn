@@ -84,7 +84,6 @@
 			$("#left").empty();
 		}
 
-		sessionStorage.setItem("index", columnId);
     	var map={
     		    1:'公司简介',
     		    2:'工程案例',
@@ -100,17 +99,13 @@
     	$("#Name").html(map[columnId]);
 		$("#colName").html(map[columnId]);
     	}
-		//公司的话只显示公司的文章
-		/*if(columnId==1){
-    		window.location.href='info.html?messageId=11';
-    	}*/
-    	
+
 		 //获取解决方案的二级栏目
 		  if(superId!="null"){
 		  getChild();
 		  }
 		  else{
-			  toPage(1);
+			  toPage(1,columnId);
 		  }  
 		  function getChild() {
 			  $.ajax({
@@ -118,30 +113,22 @@
 				type:'GET',
 				data:{superColumnId:columnId},
 				success:function(res){
-                  //  alert(res.code);
 					if(res.code==200){
 						$('#Child').empty();
-				  	childs=res.datas;
-				 // 	alert(childs[0].name);
-					html="";
+				  var	childs=res.datas;
+					var html="";
 					columnId=childs[0].name;
-				    toPage(1);
-				  //  alert(childs.length)
+				    toPage(1,columnId);
 					for (var i = 0; i < childs.length; i++) {
 						var child_name = childs[i].name;
 						var child_id=childs[i].id;
-						//alert(child_id);
 						html+="<li><a onclick='childNew("+childs[i].id+")'"+">"+child_name+"</a></li>";
-
 					}
-					//alert(html);
 					$("#Child").html(html);
 						childNew(childs[0].id);
                     }
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown){
-				//	alert(XMLHttpRequest.status);//状态码
-				
 				}		  
 			  })
 		  
@@ -154,14 +141,9 @@
         });
             function childNew(colId) {
 				columnId=colId;
-				//alert(columnId);
-				toPage(1);
+     		toPage(1,columnId);
 		  }
-		
-		  
-		  
-		toPage(1);
-		function toPage(pageNum) {
+		function toPage(pageNum,columnId) {
 			// 发送ajax请求
 			$.ajax({
 						url : '/selectMessageByColumnId',
@@ -177,16 +159,16 @@
 								$('.pagination').empty();
 								var list = res.datas;
                                 if(columnId==1){
-                                    window.location.href='info.html?messageId='+list[0].id;
+                                    window.location.href='info.html?messageId='+list[0].id+'&colId='+GetQueryString("colId");
                                 }
-                                var id=columnId;
-                            		 // alert(id+"id");
+
+                                var columnId2=GetQueryString("colId");//莫名奇妙的bug，重新获取columnId，不加显示不了
 								for (var i = 0; i < list.length; i++) {
 									$("#center-ul")
 											.append(
 													"<div><img src='"+list[i].titleImgPath+ "'>"+"<a href='info?messageId="
 															+ list[i].id
-															+ "&colId="+columnId+"'>"+list[i].title
+															+ "&colId="+columnId2+"'>"+list[i].title
 															+ "</a><span>"+list[i].date
 															+ "</span>"
 															+ '</div>\n');
@@ -195,7 +177,7 @@
 
 								var pagenation = $('.pagination');
 								pagenation
-										.append('<a href="javascript:;" class="num" onclick="toPage(1)">&laquo </a>');
+										.append('<a href="javascript:;" class="num" onclick="toPage(1,columnId)">&laquo </a>');
 								if (pageNum == 1 || pageNum == 2) {
 									// 输出5个数字
 									for (var i = 1; i <= 5 && i <= totalPage; i++) {
@@ -206,7 +188,7 @@
 										} else {
 											pagenation
 													.append('<a href="javascript:;" onclick="toPage('
-															+ i
+															+ i+","+columnId
 															+ ')">'
 															+ i
 															+ '</a>');
@@ -226,7 +208,7 @@
 										} else {
 											pagenation
 													.append('<a href="javascript:;" onclick="toPage('
-															+ i
+															+ i+","+columnId
 															+ ')">'
 															+ i
 															+ '</a>');
@@ -243,7 +225,7 @@
 										} else {
 											pagenation
 													.append('<a href="javascript:;" onclick="toPage('
-															+ i
+															+ i+","+columnId
 															+ ')">'
 															+ i
 															+ '</a>');
@@ -252,7 +234,7 @@
 								}
 								pagenation
 										.append('<a href="javascript:;" class="num" onclick="toPage('
-												+ totalPage + ')"> &raquo;</a>')
+												+ totalPage +","+columnId+ ')"> &raquo;</a>')
 							}
 						}
 					})
