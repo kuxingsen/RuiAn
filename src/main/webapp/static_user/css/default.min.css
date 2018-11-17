@@ -15515,11 +15515,11 @@ footer {
 }
 
 .am-prev::before {
-	content: "\e78e" !important
+	content: "<" !important
 }
 
 .am-next::before {
-	content: "\e636" !important
+	content: ">" !important
 }
 
 .index-nav {

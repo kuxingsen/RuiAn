@@ -47,7 +47,7 @@ public class CommonService{
                     column.setSuperId(superId);
                     columnList.add(column);
                 }
-                System.out.println(columnList);
+//                System.out.println(columnList);
                 return columnList;
             }
         } catch(SQLException e) {
