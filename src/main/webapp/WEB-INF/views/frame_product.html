@@ -15,9 +15,9 @@
 
 			<div class="frame_x">
 			<h1>
-				———<img  src="/static_user/img/product.png" > 服务外包———
+				———<img  src="/static_user/img/产学研助-01.png"> 工程案例 ———
 			</h1>
-				<ul id="frame_3"> </ul>
+				<ul id="frame_4"> </ul>
 			</div>
 
 	</body>
@@ -25,28 +25,28 @@
  
 <script type="text/javascript">
 $(document).ready(function(){
+    var colId=2;
 			 $.ajax({
 					type:"GET",
-					url:"/selectMessageByColumnId",
-					data:{columnId:"6",page:"",count:""},
+					url:"/selectMessageBySuperId",
+					data:{superId:colId,count:""},
 					dataType:"json",	
 					success:function(data){
 						//获取5张新闻资讯的信息
 						var imgs=data.datas;
 						//获取所有collist
-						$('#frame_3').empty();
+						$('#frame_4').empty();
 						//遍历参数data
 						   var html = "";
 			                for(var i=0;i<imgs.length;i++){    //遍历data数组
 			                        var ls = imgs[i];
-html +="<li><a href='info"+"?messageId="+ls.id+"&colId=6"+ "'><span>"+ls.title+"</span><em>"+ls.date+"</em></a></li>\n";
-			                   }		
+html +="<li><a href='info.html"+"?messageId="+ls.id+"&colId="+colId +"'><span>"+ls.title+"</span><em>"+ls.date+"</em></a></li>\n";
+			                   }
 			               
-			                  $("#frame_3").html(html);
+			                  $("#frame_4").html(html);
 					},
 		error:function(XMLHttpRequest, textStatus, errorThrown){
-			//alert(XMLHttpRequest.status);//状态码
-		
+
 		}			
 			 });
 	   })

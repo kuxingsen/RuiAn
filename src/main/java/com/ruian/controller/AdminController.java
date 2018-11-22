@@ -69,7 +69,7 @@ public class AdminController{
         int adminId = (int) session.getAttribute("adminId");
 
         if(adminId == adminService.getAdminId(username, password)){
-            System.out.println(adminId);
+//            System.out.println(adminId);
             int result = adminService.updateAdmin(adminId,username,newPassword);
             if(result > 0){
                 return new Result(200);
@@ -112,9 +112,9 @@ public class AdminController{
             System.out.println("file is not null");
             filePath = adminService.saveFile(file);
         }
-        System.out.println(imgPath+":::::"+filePath);
+//        System.out.println(imgPath+":::::"+filePath);
         message = adminService.updatePathInMessage(message,imgPath,filePath);
-        System.out.println(message.getTitleImgPath()+":::::"+message.getFilePath());
+//        System.out.println(message.getTitleImgPath()+":::::"+message.getFilePath());
         int result = adminService.updateMessage(adminId,message);
         if(result > 0) {
             return new Result(200);
@@ -147,7 +147,7 @@ public class AdminController{
     @RequestMapping("selectMessageByColumnId")
     @ResponseBody
     public LayUIResult<Message> selectMessageByColumnId(String columnId, String page, String limit) {
-        System.out.println(columnId+page+""+limit);
+        //System.out.println(columnId+page+""+limit);
         if((page == null) || page.equals("") || !page.matches("[1-9]\\d*")){
             page = "1";
         }

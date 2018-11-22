@@ -32,7 +32,7 @@ public class AdminService{
             ps.setString(2, oldPassword);
             result = ps.executeQuery();
             if(result != null && result.next()) {
-                System.out.println(result.getInt("id"));
+//                System.out.println(result.getInt("id"));
                 return result.getInt("id");
             }
         } catch(SQLException e) {
@@ -138,7 +138,7 @@ public class AdminService{
         File dir = new File(REAL_FILE_PATH);
         if(!dir.getParentFile().exists()) {
             boolean mk = dir.getParentFile().mkdirs();
-            System.out.println("create: yundao_dir " + mk);
+            System.out.println("create: ruian_dir " + mk);
         }
         if(!dir.exists()) {
             boolean mk = dir.mkdirs();
@@ -155,7 +155,7 @@ public class AdminService{
         File dir = new File(REAL_TITLE_IMG_PATH);
         if(!dir.getParentFile().exists()) {
             boolean mk = dir.getParentFile().mkdirs();
-            System.out.println("create: yundao_dir " + mk);
+            System.out.println("create: ruian_dir " + mk);
         }
         if(!dir.exists()) {
             boolean mk = dir.mkdirs();
@@ -208,7 +208,7 @@ public class AdminService{
         } catch(SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(message.getTitleImgPath()+":::::"+message.getFilePath());
+//        System.out.println(message.getTitleImgPath()+":::::"+message.getFilePath());
         return message;
     }
 
@@ -284,7 +284,7 @@ public class AdminService{
         try {
             PreparedStatement ps = DbUtil.executePreparedStatement(sql);
             result = ps.executeQuery();
-            System.out.println(result);
+//            System.out.println(result);
             if(result != null) {
                 List<Column> columnList = new ArrayList<>(commonService.getColumn(null));
                 while(result.next()) {

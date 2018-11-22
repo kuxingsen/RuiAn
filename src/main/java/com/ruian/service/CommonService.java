@@ -16,7 +16,6 @@ import static com.ruian.bean.Content.TITLE_IMG_PATH;
 
 @Service
 public class CommonService{
-    private List<Column> columnList;
 
     public List<Column> getColumn(Integer superColumnId) {
         String sql;
@@ -34,7 +33,7 @@ public class CommonService{
             result = ps.executeQuery();
 //            System.out.println(result);
             if(result != null) {
-                columnList = new ArrayList<>();
+                List<Column> columnList = new ArrayList<>();
                 while(result.next()) {
 
                     Column column = new Column();
@@ -56,10 +55,7 @@ public class CommonService{
         return null;
     }
     public String getColumnName(Integer columnId) {
-        if(columnList != null){
-            return columnList.get(columnId-1).getName();
-        }
-        String sql = "select name from column where id = ?";
+        String sql = "select name from menu where id = ?";
         ResultSet result;
         try {
             PreparedStatement ps = DbUtil.executePreparedStatement(sql);

@@ -69,11 +69,22 @@ public class UserController {
         if(messageList != null) return new Result<>(200, messageList);
         return new Result<>(500, "没有相应的记录");
     }
+    @RequestMapping("selectMessageBySuperId")
+    @ResponseBody
+    public Result<Message> selectMessageBySuperId(String superId, @RequestParam(defaultValue = "5") int count) {
+//        System.out.println();
+        List<Message> messageList = userService.selectMessageBySuperId(superId,count);
+        if(messageList != null) return new Result<>(200,messageList);
+        return new Result<>(500, "没有相应的记录");
+    }
 
     @RequestMapping("selectMessageByColumnId")
     @ResponseBody
     public Result<Message> selectMessageByColumnId(String columnId, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int count) {
 //        int count = 10;
+        if(columnId.equals("6") || columnId.equals("7")){
+            count = 8;
+        }
         int index = count*(page-1);
         List<Message> messageList = userService.selectMessageByColumnId(columnId,index,count);
 
@@ -93,7 +104,7 @@ public class UserController {
                 System.err.println("create:"+mk);
             }
 
-            System.out.println(fileName);
+            //System.out.println(fileName);
             HttpHeaders headers = new HttpHeaders();
 
             //下载显示的文件名，解决中文名称乱码问题

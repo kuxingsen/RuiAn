@@ -11,17 +11,17 @@
 		
 	<body>
 	<div id="frame_top"></div>
-	<div id="left">
+	<!--<div id="left">
 
 	</div>
-
+-->
 
 	<div class=" info-right">
 		<div class="info-right-title">
-			<a href="#"></a> <span id="infoName">公司简介</span>
+			<a href="#"></a> <span id="infoName"></span>
 		</div>
 
-		<div class="new-list">
+		<div>
 			<div id="content"></div>
 			<span id="col_news_info"><a
 				style="color: red; font-size: 18px"></a></span>
@@ -53,11 +53,11 @@ function GetQueryString(name)
 	  var columnId = GetQueryString("messageId");
       sessionStorage.setItem("index", columnId);
       var colId=GetQueryString("colId");
-
+/*
       if(colId!=4&&colId!=9){
     	  $("#left").empty();
-      }
-  	var map={
+      }*/
+  /*	var map={
 		    1:'公司简介',
 		    2:'工程案例',
 		    3:'新闻资讯',
@@ -71,15 +71,33 @@ function GetQueryString(name)
   	if(colId!=1){
   	    $("#infoName").empty();
   	$("#infoName").html(map[colId]);
-  	}
+  	}*/
+  	//获取栏目名显示
+      //获取所有的栏目名
+      $.ajax({
+          url: '/columnName',
+          type: 'GET',
+          data: {columnId: colId},
+          success: function (res) {
+              if (res.code === 200) {
+                  //获取所有的栏目名列表
+                  var colNames = res.datas;
+
+                  $("#infoName").empty();
+                  $("#infoName").html(colNames);
+              }
+          }
+      });
+
+			//获取信息内容
 			 $.ajax({
 				type:"GET",
 					url:"/selectMessageByMessageId",
 					data:{messageId:columnId},
 					dataType:"json",
 					success:function(res){
+				    $('#content').append("<h1 style='text-align: center;'>"+res.datas[0].title+"</h1>");
 				    if(res.datas[0].filePath!=null && res.datas[0].filePath!=""){
-                        $('#content').append("<h1 style='text-align: center;'>"+res.datas[0].title+"</h1>");
                         $('#col_news_info').children('a').text( '附件: ' + res.datas[0].filePath);
                         $("#col_news_info").children('a').attr('href', '/downFile?messageId='+res.datas[0].id)
 					}

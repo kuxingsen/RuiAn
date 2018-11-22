@@ -17,7 +17,7 @@ import static com.ruian.bean.Content.TITLE_IMG_PATH;
 public class UserService{
 
     public List<Message> selectMessageByColumnId(String columnId,int index,int count) {
-        String sql = "select mess.id,title,title_img,date,content,file from message mess,menu where mess.menu_id=? and mess.menu_id=menu.id limit "+index+","+count;
+        String sql = "select mess.id,title,title_img,date,content,file from message mess,menu where mess.menu_id=? and mess.menu_id=menu.id order by mess.id desc limit "+index+","+count;
         return getMessageResult(columnId, sql);
     }
 
@@ -40,6 +40,8 @@ public class UserService{
                     message.setTitle(result.getString("title"));
                     if(result.getString("title_img") != null){
                         message.setTitleImgPath(TITLE_IMG_PATH + File.separator+result.getString("title_img"));
+                    }else {
+                        message.setTitleImgPath(TITLE_IMG_PATH + File.separator+"default.jpg");
                     }
                     message.setDate(result.getString("date"));
                     message.setContent(result.getString("content"));
@@ -62,4 +64,8 @@ public class UserService{
         return null;
     }
 
+    public List<Message> selectMessageBySuperId(String superId, int count) {
+        String sql = "select mess.id,title,title_img,date,content,file from message mess,menu m1,menu m2 where m1.id=? and m1.id = m2.super_menu_id and mess.menu_id=m2.id ORDER BY mess.id DESC limit "+count;
+        return getMessageResult(superId, sql);
+    }
 }

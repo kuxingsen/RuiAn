@@ -15,7 +15,7 @@
 
 			<div class="frame_x">
 			<h1>
-				———<img  src="/static_user/img/project.png" > 工程案例———
+				———<img  src="/static_user/img/project.png" > 产品介绍———
 			 </h1>
 				<ul id="frame_2"> </ul>
 			</div>
@@ -24,10 +24,11 @@
  
  <script type="text/javascript">
 $(document).ready(function(){
+    var colId=4;
 			 $.ajax({
 					type:"GET",
-					url:"/selectMessageByColumnId",
-					data:{columnId:"2",page:"",count:""},
+					url:"/selectMessageBySuperId",
+					data:{superId:colId,count:""},
 					dataType:"json",	
 					success:function(data){
 						//获取5张工程案例的信息
@@ -38,7 +39,7 @@ $(document).ready(function(){
 						   var html = "";
 			                for(var i=0;i<projects.length;i++){    //遍历data数组
 			                        var ls = projects[i];
-			               				html +="<li><a href='info"+"?messageId="+ls.id+"&colId=2"+ "'><span>"+ls.title+"</span><em>"+ls.date+"</em></a></li>\n";
+			               				html +="<li><a href='info"+"?messageId="+ls.id+"&colId="+colId+ "'><span>"+ls.title+"</span><em>"+ls.date+"</em></a></li>\n";
 
 			                }		
 			                  $("#frame_2").html(html);

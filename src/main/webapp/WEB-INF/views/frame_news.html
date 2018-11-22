@@ -25,10 +25,11 @@
  
 <script type="text/javascript">
 $(document).ready(function(){
+    var colId=5;
 			 $.ajax({
 					type:"GET",
 					url:"/selectMessageByColumnId",
-					data:{columnId:"3",page:"",count:""},
+					data:{columnId:colId,page:"",count:""},
 					dataType:"json",	
 					success:function(data){
 						//获取5张新闻资讯的信息
@@ -39,7 +40,7 @@ $(document).ready(function(){
 						   var html = "";
 			                for(var i=0;i<imgs.length;i++){    //遍历data数组
 			                        var ls = imgs[i];
-html +="<li><a href='info.html"+"?messageId="+ls.id+ "&colId=3" +"' ><span>"+ls.title+"</span><em>"+ls.date+"</em></a></li>\n";
+html +="<li><a href='info.html"+"?messageId="+ls.id+ "&colId=" +colId+"' ><span>"+ls.title+"</span><em>"+ls.date+"</em></a></li>\n";
 			                   }		
 			               
 			                  $("#frame_1").html(html);

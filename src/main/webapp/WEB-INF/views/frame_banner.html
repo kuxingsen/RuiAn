@@ -4,11 +4,13 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title></title>
-	 	<link rel="stylesheet" href="/static_user/css/default.min.css?t=227" />
 
-		<script type="text/javascript" src="/static_user/ui_lib/jquery/jquery.min.js"></script>
+	 	<link rel="stylesheet" href="/static_user/css/default.min.css" />
+
+
+		<script type="text/javascript" src="/static_user/js/jquery-3.3.1.js"></script>
 		<script type="text/javascript" src="/static_user/js/amazeui.min.js"></script>
-		 
+
 
 	</head>
 
@@ -16,18 +18,19 @@
 	<div class="am-cf" ></div>
 	<div  class="am-slider am-slider-default" data-am-flexslider="{playAfterPaused: 8000}" >
 		 <ul class="am-slides"  style="border-bottom: 5px solid #123683;">
-			 <li id="li0"><img height="550px" src="/static_user/img/test5.jpg"></li>
+			<!--<li id="li0"><img height="550px" src="/static_user/img/test5.jpg"></li>
 			<li id="li1"><img height="550px" src="/static_user/img/test5.jpg"></li>
 			<li id="li2"><img height="550px" src="/static_user/img/test5.jpg"></li>
 			<li id="li3"><img height="550px" src="/static_user/img/test5.jpg"></li>
-			<li id="li4"><img height="550px" src="/static_user/img/test5.jpg"></li>
-			
-			<!--
-			<li id="li1"></li>
-			<li id="li2"></li>
-			<li id="li3"></li>
-			<li id="li4"></li>  -->
-			
+			<li id="li4"><img height="550px" src="/static_user/img/test5.jpg"></li>-->
+
+
+			 <li id="li0"></li>
+			 <li id="li1"></li>
+			 <li id="li2"></li>
+             <li id="li3"></li>
+             <li id="li4"><img height="550px" src="/static_user/img/empty.png"></li>
+			<!--最后一张轮播图要先给一张空白照-->
 		</ul> 
 	</div>
 </body>
@@ -42,15 +45,16 @@
 						var imgs=data.datas;
 					
 						//遍历参数data						   
-			                for(var i=0;i<imgs.length;i++){    //遍历data数组
+			                for(var i=0;i<=imgs.length;i++){    //遍历data数组
 			                	var liId="#li"+i;
 			                	$(liId).html("");
 			                    var ls = imgs[i];
 			                   var html="<a href='info?messageId="+ls.id+"&colId="+ls.colId+"'><img height='550px' src='"+ls.titleImg+"'/></a>";
 		                        $(liId).html(html)
-
+								//alert(imgs.length + "*"+ liId);
+                                //alert(html);
  						}
-	               
+
 			        },
 		error:function(XMLHttpRequest, textStatus, errorThrown){
 		//	alert(XMLHttpRequest.status);//状态码
@@ -58,5 +62,5 @@
 		}			
 			 });
 	   })
-  		 </script>       
+  		 </script>
 </html>
