@@ -5,12 +5,15 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Properties;
 
 public class Content{
-    public static final String REAL_TITLE_IMG_PATH ;
+    public static final String REAL_TITLE_IMG_PATH;
     public static final String REAL_FILE_PATH;
-    public static final String TITLE_IMG_PATH ;
+    public static final String TITLE_IMG_PATH;
     public static final String FILE_PATH;
 
 
@@ -25,15 +28,25 @@ public class Content{
         Properties properties;
         try {
             properties = PropertiesLoaderUtils.loadProperties(resource);
-        } catch (IOException e) {
+        } catch(IOException e) {
             throw new RuntimeException("content.properties import exception");
         }
-        String projectPath = Content.class.getClassLoader().getResource("../../").getPath();
-        projectPath = projectPath.substring(0,projectPath.length()-1);
+
+        String projectPath = null;
+        try {
+            projectPath = URLDecoder.decode(Content.class.getClassLoader().getResource("../../").getPath(),"UTF-8");
+        } catch(UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        projectPath = projectPath.substring(0, projectPath.length() - 1);
         TITLE_IMG_PATH = properties.getProperty("title_img_path");
         FILE_PATH = properties.getProperty("file_path");
-        REAL_TITLE_IMG_PATH = projectPath+ TITLE_IMG_PATH;
-        REAL_FILE_PATH = projectPath+ FILE_PATH;
+        REAL_TITLE_IMG_PATH = projectPath + TITLE_IMG_PATH;
+        REAL_FILE_PATH = projectPath + FILE_PATH;
+
+//        System.out.println(TITLE_IMG_PATH);
+//        System.out.println(FILE_PATH);
+
         URL = properties.getProperty("jdbc_url");
         USER = properties.getProperty("jdbc_user");
         PASSWORD = properties.getProperty("jdbc_password");

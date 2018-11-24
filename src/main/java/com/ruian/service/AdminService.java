@@ -279,14 +279,14 @@ public class AdminService{
     }
 
     public List<Column> getColumn() {
-        String sql = "select m1.id id,m1.name name,m2.name supername from menu m1,menu m2 where m1.super_menu_id = m2.id";
+        String sql = "select m1.id id,m1.name name,m2.name supername from menu m1,menu m2 where m1.super_menu_id = m2.id ";
         ResultSet result;
         try {
             PreparedStatement ps = DbUtil.executePreparedStatement(sql);
             result = ps.executeQuery();
 //            System.out.println(result);
             if(result != null) {
-                List<Column> columnList = new ArrayList<>(commonService.getColumn(null));
+                List<Column> columnList = new ArrayList<>(getOneColumn());
                 while(result.next()) {
                     Column column = new Column();
                     column.setId(result.getString("id"));
@@ -300,6 +300,31 @@ public class AdminService{
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    private List<Column>  getOneColumn() {
+        String sql = "select m1.id,m1.name from menu m1 where m1.super_menu_id is null " +
+                "and m1.id not in(select m2.super_menu_id from menu m2 where m2.super_menu_id is not null)";
+        ResultSet result;
+        try {
+            PreparedStatement ps = DbUtil.executePreparedStatement(sql);
+            result = ps.executeQuery();
+//            System.out.println(result);
+            if(result != null) {
+                List<Column> columnList = new ArrayList<>();
+                while(result.next()) {
+                    Column column = new Column();
+                    column.setId(result.getString("id"));
+                    column.setName(result.getString("name"));
+
+                    columnList.add(column);
+                }
+                return columnList;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
