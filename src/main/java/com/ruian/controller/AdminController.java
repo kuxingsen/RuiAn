@@ -176,4 +176,24 @@ public class AdminController{
         return new Result<>(500, "没有相应的记录");
     }
 
+    @RequestMapping("delOldImage")
+    @ResponseBody
+    public Result deleteOldImage(String messageId){
+        int result = adminService.deleteOldFileOrImg(Integer.parseInt(messageId),"title_img");
+        if(result > 0) {
+            return new Result(200);
+        }
+        return new Result(500, "删除失败");
+
+    }
+    @RequestMapping("delOldFile")
+    @ResponseBody
+    public Result deleteOldFile(String messageId){
+        int result = adminService.deleteOldFileOrImg(Integer.parseInt(messageId),"file");
+        if(result > 0) {
+            return new Result(200);
+        }
+        return new Result(500, "删除失败");
+
+    }
 }

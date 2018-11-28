@@ -1,0 +1,71 @@
+﻿<div class="layui-header">
+    <div class="layui-logo">
+        <span style="font-size: 22px;">信息发布中心</span>
+    </div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+
+            <a id="adminName" href="javascript:void(0);">
+                管理员:
+            </a>
+        </li>
+        <li class="layui-nav-item"><a href="javascript:void(0);" onclick="adminLogout()">退出登录</a></li>
+    </ul>
+</div>
+
+<div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            <li class="layui-nav-item layui-nav-itemed">
+                <a class="" href="javascript:;">所有操作</a>
+                <dl class="layui-nav-child">
+                    <dd><a id="doAdd" href="add">信息添加</a></dd>
+                    <dd><a id="doControl" href="control">信息管理</a></dd>
+                    <dd><a id="doChangePwd" href="changepwd">修改密码</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<script>
+    //请求加载管理员姓名
+    $.ajax({
+        url: 'getUsername',
+        method: 'post',
+        dataType: 'json',
+        async: true,//异步加载
+        success: function (data) {
+            //加载成功
+            if (data.code == "200") {
+                //设置管理员名称
+                $("#adminName").html("管理员:" + data.datas[0]);
+                $("#username").val(data.datas[0]);
+            } else {
+                layer.msg("管理员名称加载失败!");
+            }
+        }
+    });
+
+    function adminLogout(){
+        $.ajax({
+            url: 'adminLogout',
+            method: 'post',
+            dataType: 'json',
+            success: function (data) {
+                //加载成功
+                if (data.code == "200") {
+                    layer.msg("退出登录成功!");
+                    setTimeout("location.href='login'", 500)
+                } else {
+                    layer.msg("管理员名称加载失败!");
+                }
+            }
+        });
+    }
+</script>

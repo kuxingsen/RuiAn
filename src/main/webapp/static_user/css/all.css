@@ -198,6 +198,20 @@
 	font-size: 1.5rem;
 	padding-left: 1.5rem;
 }
+
+
+.frame_x-more{
+	color: rgba(22, 67, 163, 0.51);
+	font-size: 20px;
+	font-weight: bold;
+	float: right;
+	margin: 15px 10px 10px auto;
+	cursor: pointer;
+}
+.frame_x-more:hover{
+	color: #123683;
+	border-bottom: 1px solid #123683;
+}
 /********************主页框架frame_x结束*****************************/
 
 

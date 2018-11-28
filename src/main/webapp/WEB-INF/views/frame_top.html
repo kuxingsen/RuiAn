@@ -9,21 +9,7 @@
 
 		
 		<script type="text/javascript">
-		/*	//显示子菜单
-			function showSubMenu(li) {
-				var subMenu = li.getElementsByTagName("ul")[0];
-				subMenu.style.display = "block";
-			}
 
-			//隐藏子菜单
-			function hideSubMenu(li) {
-				var subMenu = li.getElementsByTagName("ul")[0];
-				subMenu.style.display = "none";
-			}
-			function changeBodyPage(id, pageId) {
-				$("#frame_body").load("col_news.html",{colId:"3"});
-
-			}*/
 
 		 </script>
 
@@ -37,26 +23,7 @@
 -->
 			 <div class="menu">
 				 <ul id="navigation">
-					 <!--<li>
-                     <a  href="#">服务1</a>
-                     <div>
-                         <span><a href="#">服务一</a></span>
-                         <span><a href="#">服务一</a></span>
-                         <span><a href="#">服务一</a></span>
-                         <span><a href="#">服务一</a></span>
-                         <span><a href="#">服务一</a></span>
-                     </div>
-                 </li>
-                     <li>
-                         <a  href="#">服务1</a>
-                         <div>
-                             <span><a href="#">服务一</a></span>
-                             <span><a href="#">服务一</a></span>
-                             <span><a href="#">服务一</a></span>
-                             <span><a href="#">服务一</a></span>
-                             <span><a href="#">服务一</a></span>
-                         </div>
-                     </li>-->
+
 				 </ul>
 			 </div>
 
@@ -79,8 +46,7 @@
 						   var html = "<li><a href='index.html'>首页</a></li>";
 			                for(var i=0;i<cols.length;i++){    //遍历data数组
 			                        var ls = cols[i];
-								if(ls.name=="解决方案"||ls.name=="产品介绍"||ls.name=="工程案例"){
-                                       /* html +="<li><a href='col_news.html?colId="+ls.id+"&superId="+ls.superId+"'>"+ls.name+"</a></li>\n"*/
+								if(ls.name=="解决方案"){
                                     //插入二级菜单的样式
                                   html=getChild(ls.id,html,ls.name);
                                     }
@@ -128,7 +94,6 @@ function getChild(superId,html,name) {
         error:function(XMLHttpRequest, textStatus, errorThrown){
         }
     })
-   // alert(htm+"4*****");
     return htm;
 
 }

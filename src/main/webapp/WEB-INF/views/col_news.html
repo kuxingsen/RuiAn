@@ -83,8 +83,7 @@
 		if(columnId==6||columnId==7){
 				$(".info-right-list").attr("class","info-right-list2");
 		}
-	//	alert(superId+"superId")
-		//alert(columnId+"columnId");
+
 		//获取所有的栏目名
 		$.ajax({
             url: '/columnName',
@@ -167,103 +166,109 @@
 		  }*/
     toPage(1,columnId);
 		function toPage(pageNum,columnId) {
-		//	$(".num").attr("style","{}").siblings().removeAttr("color","red");
-          //  $("#nav li").eq($(this).index()).addClass("navdown").siblings().removeClass("navdown");
-			// 发送ajax请求
-			$.ajax({
-						url : '/selectMessageByColumnId',
-						type : 'GET',
-						data : {
-							columnId : columnId,
-							page : pageNum
-						},
-						success : function(res) {
-							if (res.code === 200) {
-								// 清空列表, 重新更新
-								$("#center-ul").empty();
-								$('.pagination').empty();
-								var list = res.datas;
-                                if(columnId==1||columnId==9){
-                                    window.location.href='info.html?messageId='+list[0].id+'&colId='+GetQueryString("colId");
+            //	$(".num").attr("style","{}").siblings().removeAttr("color","red");
+            //  $("#nav li").eq($(this).index()).addClass("navdown").siblings().removeClass("navdown");
+            // 发送ajax请求
+
+                $.ajax({
+                    url: '/selectMessageByColumnId',
+                    type: 'GET',
+                    data: {
+                        columnId: columnId,
+                        page: pageNum
+                    },
+
+                    success: function (res) {
+                        if (res.code === 200) {
+                            // 清空列表, 重新更新
+                            $("#center-ul").empty();
+                            $('.pagination').empty();
+                            var list = res.datas;
+                            if (columnId == 1 || columnId == 9) {
+                                window.location.href = 'info.html?messageId=' + list[0].id + '&colId=' + GetQueryString("colId");
+                            }
+
+                            var columnId2 = GetQueryString("colId");//莫名奇妙的bug，重新获取columnId，不加显示不了
+                            for (var i = 0; i < list.length; i++) {
+                                $("#center-ul")
+                                    .append(
+                                        "<div><img src='" + list[i].titleImgPath + "'>" + "<a href='info?messageId="
+                                        + list[i].id
+                                        + "&colId=" + columnId2 + "'>" + list[i].title
+                                        + "</a><span>" + list[i].date
+                                        + "</span>"
+                                        + '</div>\n');
+                            }
+                            var totalPage = res.totalPage;
+
+                            var pagenation = $('.pagination');
+                            pagenation
+                                .append('<a href="javascript:;"  class="num"  onclick="toPage(1,columnId)">&laquo </a>');
+                            if (pageNum == 1 || pageNum == 2) {
+                                // 输出5个数字
+                                for (var i = 1; i <= 5 && i <= totalPage; i++) {
+                                    if (i == pageNum) {
+                                        pagenation
+                                            .append('<a href="javascript:;"  class="pick">'
+                                                + i + '</a>');
+                                    } else {
+                                        pagenation
+                                            .append('<a href="javascript:;"  onclick="toPage('
+                                                + i + "," + columnId
+                                                + ')">'
+                                                + i
+                                                + '</a>');
+                                    }
                                 }
+                            } else if (pageNum == totalPage - 1
+                                || pageNum == totalPage) {
+                                // 输出5个数字
+                                for (var i = totalPage - 4; i <= totalPage; i++) {
+                                    if (i < 1) {
+                                        continue;
+                                    }
+                                    if (i == pageNum) {
+                                        pagenation
+                                            .append('<a href="javascript:;"  class="pick">'
+                                                + i + '</a>');
+                                    } else {
+                                        pagenation
+                                            .append('<a href="javascript:;"  onclick="toPage('
+                                                + i + "," + columnId
+                                                + ')">'
+                                                + i
+                                                + '</a>');
+                                    }
+                                }
+                            } else {
+                                // 在中间
+                                for (var i = pageNum - 2; i <= pageNum + 2
+                                && i <= totalPage; i++) {
+                                    if (i == pageNum) {
+                                        pagenation
+                                            .append('<a href="javascript:;"  class="pick">'
+                                                + i + '</a>');
+                                    } else {
+                                        pagenation
+                                            .append('<a href="javascript:;" onclick="toPage('
+                                                + i + "," + columnId
+                                                + ')">'
+                                                + i
+                                                + '</a>');
+                                    }
+                                }
+                            }
+                            pagenation
+                                .append('<a href="javascript:;" class="num"  onclick="toPage('
+                                    + totalPage + "," + columnId + ')"> &raquo;</a>')
+                        }
+                    }
+                })
 
-                                var columnId2=GetQueryString("colId");//莫名奇妙的bug，重新获取columnId，不加显示不了
-								for (var i = 0; i < list.length; i++) {
-									$("#center-ul")
-											.append(
-													"<div><img src='"+list[i].titleImgPath+ "'>"+"<a href='info?messageId="
-															+ list[i].id
-															+ "&colId="+columnId2+"'>"+list[i].title
-															+ "</a><span>"+list[i].date
-															+ "</span>"
-															+ '</div>\n');
-								}
-								var totalPage = res.totalPage;
 
-								var pagenation = $('.pagination');
-								pagenation
-										.append('<a href="javascript:;"  class="num"  onclick="toPage(1,columnId)">&laquo </a>');
-								if (pageNum == 1 || pageNum == 2) {
-									// 输出5个数字
-									for (var i = 1; i <= 5 && i <= totalPage; i++) {
-										if (i == pageNum) {
-											pagenation
-													.append('<a href="javascript:;"  class="pick">'
-															+ i + '</a>');
-										} else {
-											pagenation
-													.append('<a href="javascript:;"  onclick="toPage('
-															+ i+","+columnId
-															+ ')">'
-															+ i
-															+ '</a>');
-										}
-									}
-								} else if (pageNum == totalPage - 1
-										|| pageNum == totalPage) {
-									// 输出5个数字
-									for (var i = totalPage - 4; i <= totalPage; i++) {
-										if (i < 1) {
-											continue;
-										}
-										if (i == pageNum) {
-											pagenation
-													.append('<a href="javascript:;"  class="pick">'
-															+ i + '</a>');
-										} else {
-											pagenation
-													.append('<a href="javascript:;"  onclick="toPage('
-															+ i+","+columnId
-															+ ')">'
-															+ i
-															+ '</a>');
-										}
-									}
-								} else {
-									// 在中间
-									for (var i = pageNum - 2; i <= pageNum + 2
-											&& i <= totalPage; i++) {
-										if (i == pageNum) {
-											pagenation
-													.append('<a href="javascript:;"  class="pick">'
-															+ i + '</a>');
-										} else {
-											pagenation
-													.append('<a href="javascript:;" onclick="toPage('
-															+ i+","+columnId
-															+ ')">'
-															+ i
-															+ '</a>');
-										}
-									}
-								}
-								pagenation
-										.append('<a href="javascript:;" class="num"  onclick="toPage('
-												+ totalPage +","+columnId+ ')"> &raquo;</a>')
-							}
-						}
-					})
-		}
+        }
+
+
 	</script>
 
 

@@ -14,10 +14,9 @@
 	<body>
 
 			<div class="frame_x">
-			<h1>
-				———<img  src="/static_user/img/project.png" > 产品介绍———
-			 </h1>
+				<h1>———<img  src="/static_user/img/project.png" > 产品介绍———</h1>
 				<ul id="frame_2"> </ul>
+			 	<a class="frame_x-more" href="col_news.html?colId=4"> >> MORE >>> </a>
 			</div>
 
 	</body>
@@ -27,8 +26,8 @@ $(document).ready(function(){
     var colId=4;
 			 $.ajax({
 					type:"GET",
-					url:"/selectMessageBySuperId",
-					data:{superId:colId,count:""},
+					url:"/selectMessageByColumnId",
+					data:{columnId:colId,page:"",count:""},
 					dataType:"json",	
 					success:function(data){
 						//获取5张工程案例的信息
