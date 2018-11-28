@@ -170,8 +170,8 @@ public class AdminController{
 
     @RequestMapping("selectColumn")
     @ResponseBody
-    public Result<Column> selectColumn() {
-        List<Column> columnList = adminService.getColumn();
+    public Result<Column> selectColumn(Integer c) {
+        List<Column> columnList = adminService.getColumn(c);//1 代表只要没有二级菜单的一级菜单
         if(columnList != null) return new Result<>(200,columnList);
         return new Result<>(500, "没有相应的记录");
     }
@@ -195,5 +195,18 @@ public class AdminController{
         }
         return new Result(500, "删除失败");
 
+    }
+
+    @RequestMapping("updateColumn")
+    @ResponseBody
+    public Result updateColumn(Column column){
+        System.out.println(column);
+        if(column != null){
+            int result = adminService.updateColumn(column);
+            if(result > 0) {
+                return new Result(200);
+            }
+        }
+        return new Result(500, "删除失败");
     }
 }

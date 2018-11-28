@@ -274,7 +274,7 @@ public class AdminService{
         }
     }
 
-    public List<Column> getColumn() {
+    public List<Column> getColumn(int i) {
         String sql = "select m1.id id,m1.name name,m2.name supername from menu m1,menu m2 where m1.super_menu_id = m2.id ";
         ResultSet result;
         try {
@@ -282,7 +282,7 @@ public class AdminService{
             result = ps.executeQuery();
 //            System.out.println(result);
             if(result != null) {
-                List<Column> columnList = new ArrayList<>(getOneColumn());
+                List<Column> columnList = new ArrayList<>(getOneColumn(i));
                 while(result.next()) {
                     Column column = new Column();
                     column.setId(result.getString("id"));
@@ -299,9 +299,13 @@ public class AdminService{
         return null;
     }
 
-    private List<Column>  getOneColumn() {
-        String sql = "select m1.id,m1.name from menu m1 where m1.super_menu_id is null " +
-                "and m1.id not in(select m2.super_menu_id from menu m2 where m2.super_menu_id is not null)";
+    private List<Column>  getOneColumn(int i) {
+        String sql="select m1.id,m1.name from menu m1 where m1.super_menu_id is null ";
+        if(i == 1){
+            sql += "and m1.id not in(select m2.super_menu_id from menu m2 where m2.super_menu_id is not null)";
+        }else {
+            sql += "";
+        }
         ResultSet result;
         try {
             PreparedStatement ps = DbUtil.executePreparedStatement(sql);
@@ -362,6 +366,20 @@ public class AdminService{
 //            ps.setString(1,w);
             ps.setString(1,null);
             ps.setInt(2,messageId);
+            result = ps.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public int updateColumn(Column column){
+        String sql = "update menu set name=? where id=?";
+        int result=0;
+        try {
+            PreparedStatement ps = DbUtil.executePreparedStatement(sql);
+            ps.setString(1, column.getName());
+            ps.setInt(2, Integer.parseInt(column.getId()));
             result = ps.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
