@@ -2,7 +2,8 @@
 <html>
 	<head>
 		 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title></title>
+		<title>睿安信息科技</title>
+		<link rel="icon" href="/static_user/img/system/navlogo.png" />
 	
 		<script type="text/javascript" src="/static_user/js/jquery-3.3.1.js"></script>
 		<link rel="stylesheet" href="/static_user/css/all.css" />
@@ -16,10 +17,10 @@
 		<div class="footer">
 			<ul>
 				<li><a href="#frame_top"><span>返回顶部</span></a></li>
-				<li><a href="col_news.html?colId=1"><span>公司简介</span></a></li>
-				<li><a href="col_news.html?colId=9"><span>联系我们</span></a></li>
-				<li><a href="col_news.html?colId=8"><span>服务外包</span></a></li>
-				<li><a href="admin/login.html"><span>后台管理</span></a></li>
+				<li><a href="col_news.html?colId=1" ><span id="text1"></span></a></li>
+				<li><a href="col_news.html?colId=9" ><span id="text2"></span></a></li>
+				<li><a href="col_news.html?colId=8" ><span id="text3"></span></a></li>
+				<li><a href="admin/login.html" id="text4"><span>后台管理</span></a></li>
 			</ul>
 
 
@@ -29,11 +30,43 @@
 			<p>
 				<a href="#" > <img
 					style="width: 45px; height: 45px; margin-left: 50px"
-					src="/static_user/img/foot_line.png">
+					src="/static_user/img/system/foot_line.png">
 				</a>
 			</p>
 		</div>
 	</footer>
 
 </body>
+	<script>
+	//获取所有栏目
+	$(document).ready(function(){
+	$.ajax({
+	type:"GET",
+	url:"/selectColumn",//地址改名
+	dataType:"json",
+	success:function(data){
+	//获取所有栏目
+	var cols=data.datas;
+	//遍历参数data
+	for(var i=0;i<cols.length;i++) {    //遍历data数组
+        var ls = cols[i];
+        if (ls.id == 1) {
+            $("#text1").text(ls.name);
+        }
+        if (ls.id == 9) {
+            $("#text2").text(ls.name);
+        }
+		if(ls.id==8){
+            $("#text3").text(ls.name);
+        }
+    }
+	},
+	error:function(XMLHttpRequest, textStatus, errorThrown){
+
+	}
+	});
+
+
+	})
+	</script>
 </html>

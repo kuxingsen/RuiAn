@@ -170,7 +170,7 @@ public class AdminController{
 
     @RequestMapping("selectColumn")
     @ResponseBody
-    public Result<Column> selectColumn(Integer c) {
+    public Result<Column> selectColumn(@RequestParam(defaultValue = "1") Integer c) {
         List<Column> columnList = adminService.getColumn(c);//1 代表只要没有二级菜单的一级菜单
         if(columnList != null) return new Result<>(200,columnList);
         return new Result<>(500, "没有相应的记录");

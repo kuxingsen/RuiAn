@@ -3,7 +3,8 @@
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title></title>
+		<title>睿安信息科技</title>
+		<link rel="icon" href="/static_user/img/system/navlogo.png" />
 
 	 	<link rel="stylesheet" href="/static_user/css/default.min.css" />
 
@@ -29,7 +30,7 @@
 			 <li id="li1"></li>
 			 <li id="li2"></li>
              <li id="li3"></li>
-             <li id="li4"><img height="550px" src="/static_user/img/empty.png"></li>
+             <li id="li4"><img height="550px" src="/static_user/img/system/empty.png"></li>
 			<!--最后一张轮播图要先给一张空白照-->
 		</ul> 
 	</div>
@@ -45,7 +46,7 @@
 						var imgs=data.datas;
 					
 						//遍历参数data						   
-			                for(var i=0;i<=imgs.length;i++){    //遍历data数组
+			                for(var i=0;i<imgs.length;i++){    //遍历data数组
 			                	var liId="#li"+i;
 			                	$(liId).html("");
 			                    var ls = imgs[i];
