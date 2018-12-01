@@ -5,6 +5,8 @@
 		<title>睿安信息科技</title>
 		<link rel="icon" href="/static_user/img/system/navlogo.png" />
 		<link rel="stylesheet" href="/static_user/css/all.css" />
+		<link rel="stylesheet" href="/static_user/css/default.min.css" />
+
 		<script type="text/javascript" src="/static_user/js/jquery-3.3.1.js"></script>
 
 		
@@ -23,15 +25,15 @@
 		</div>
 
 		<div>
-			<div id="content"></div>
-			<span id="col_news_info"><a
-				style="color: red; font-size: 18px"></a></span>
+			<div id="content" style="margin: 50px 100px auto 100px;"></div>
+			<span id="col_news_info"><a style="color: red; font-size: 18px;margin: 50px 100px auto 100px;"></a></span>
 		</div>
 		<br>
 		<br>
 		<div class="page-list"></div>
 	</div>
 
+	<div id="frame_bottom"></div>
 
 	</body>
 
@@ -51,6 +53,7 @@ function GetQueryString(name)
 //获取所有栏目
   $(document).ready(function(){ 
 	  $("#frame_top").load("frame_top.html");
+      $("#frame_bottom").load("frame_bottom.html");
 	  var columnId = GetQueryString("messageId");
       sessionStorage.setItem("index", columnId);
       var colId=GetQueryString("colId");
@@ -97,13 +100,15 @@ function GetQueryString(name)
 					data:{messageId:columnId},
 					dataType:"json",
 					success:function(res){
-				    $('#content').append("<h1 style='text-align: center;'>"+res.datas[0].title+"</h1>");
+				    	$('#content').append("<h1 style='text-align: center;'>"+res.datas[0].title+"</h1>");
+                        $('#content').append("<h3 style='text-align: center; color: gray; font-weight:normal; '>"+res.datas[0].date+"</h3>");
+                        $('#content').append("<p>"+res.datas[0].content+"</p>");
 				    if(res.datas[0].filePath!=null && res.datas[0].filePath!=""){
                         $('#col_news_info').children('a').text( '附件: ' + res.datas[0].filePath);
                         $("#col_news_info").children('a').attr('href', '/downFile?messageId='+res.datas[0].id)
 					}
 
-						$('#content').append("<p>"+res.datas[0].content+"</p>");
+
 					},
 		error:function(XMLHttpRequest, textStatus, errorThrown){
 		}

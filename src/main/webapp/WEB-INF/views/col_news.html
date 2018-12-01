@@ -10,7 +10,9 @@
 	<link rel="icon" href="/static_user/img/system/navlogo.png" />
 
 	<link rel="stylesheet" href="/static_user/css/all.css" />
-<script type="text/javascript" src="/static_user/js/jquery-3.3.1.js"></script>
+	<link rel="stylesheet" href="/static_user/css/default.min.css" />
+
+	<script type="text/javascript" src="/static_user/js/jquery-3.3.1.js"></script>
 
 
 </head>
@@ -18,26 +20,6 @@
 <body>
 
 	<div id="news_top"></div>
-
-	<!--<div id="left">
-		<div class="info-left">
-			&lt;!&ndash;<h1 id="Name">——新闻资讯——</h1>&ndash;&gt;
-
-			<ul id="Child">
-				&lt;!&ndash;<li><a href="#"
-					onclick="changeBodyPage('#frame_body', 'col_news.html')">公司新闻</a>
-				</li>
-				<li><a href="#"
-					onclick="changeBodyPage('#frame_body', 'col_news.html')">产品资讯</a>
-				</li>
-				<li><a href="#"
-					onclick="changeBodyPage('#frame_body', 'col_news.html')">营销动态</a>
-				</li>&ndash;&gt;
-
-			</ul>
-		</div>
-	</div>-->
-
 
 	<div class=" info-right">
 		<div class="info-right-title">
@@ -65,9 +47,9 @@
 		</ul>
 	</div>
 
-	
-	<script>
+	<div id="frame_bottom"></div>
 
+	<script>
 
     	
 		function GetQueryString(name) {
@@ -78,7 +60,8 @@
 			return null;
 		}
 
-		$("#news_top").load("frame_top.html")
+		$("#news_top").load("frame_top.html");
+        $("#frame_bottom").load("frame_bottom.html");
 		var columnId = GetQueryString("colId");
 		var superId=GetQueryString("superId");
 		if(columnId==6||columnId==7){
@@ -100,71 +83,6 @@
         });
 
 
-
-		/*//判断一栏或两栏*!/
-		var superId=GetQueryString("superId");
-
-		if(superId=="null"){
-			$("#left").empty();
-		}
-
-    	var map={
-    		    1:'公司简介',
-    		    2:'工程案例',
-    		    3:'新闻资讯',
-    		    4:'产品介绍',
-    		    5:'产学研',
-    		    6:'服务外包',
-    		    7:'合作伙伴',
-    		    8:'产学研',
-    		    9:'解决方案'
-    		};
-    	if(columnId!=1){
-    	$("#Name").html(map[columnId]);
-		$("#colName").html(map[columnId]);
-    	}*/
-
-		/* //获取解决方案的二级栏目
-		  if(superId!="null"){
-		  getChild();
-		  }
-		  else{
-			  toPage(1,columnId);
-		  }  
-		  function getChild() {
-			  $.ajax({
-				url:'/selectColumn',
-				type:'GET',
-				data:{superColumnId:columnId},
-				success:function(res){
-					if(res.code==200){
-						$('#Child').empty();
-				  var	childs=res.datas;
-					var html="";
-					columnId=childs[0].name;
-				    toPage(1,columnId);
-					for (var i = 0; i < childs.length; i++) {
-						var child_name = childs[i].name;
-						var child_id=childs[i].id;
-						html+="<li><a onclick='childNew("+childs[i].id+")'"+">"+child_name+"</a></li>";
-					}
-					$("#Child").html(html);
-						childNew(childs[0].id);
-                    }
-				},
-				error:function(XMLHttpRequest, textStatus, errorThrown){
-				}		  
-			  })
-		  
-		}
-*/
-    /*    $(document).ready(function(){
-				childNew(columnId);
-        });
-            function childNew(colId) {
-				columnId=colId;
-     		toPage(1,columnId);
-		  }*/
     toPage(1,columnId);
 		function toPage(pageNum,columnId) {
             //	$(".num").attr("style","{}").siblings().removeAttr("color","red");
