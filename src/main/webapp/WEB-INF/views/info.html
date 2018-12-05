@@ -102,14 +102,15 @@ function GetQueryString(name)
 					success:function(res){
 				    	$('#content').append("<h1 style='text-align: center;'>"+res.datas[0].title+"</h1>");
                         $('#content').append("<h3 style='text-align: center; color: gray; font-weight:normal; '>"+res.datas[0].date+"</h3>");
-                        $('#content').append("<p>"+res.datas[0].content+"</p>");
-				    if(res.datas[0].filePath!=null && res.datas[0].filePath!=""){
-                        $('#col_news_info').children('a').text( '附件: ' + res.datas[0].filePath);
-                        $("#col_news_info").children('a').attr('href', '/downFile?messageId='+res.datas[0].id)
-					}
+                        if(res.datas[0].filePath!=null && res.datas[0].filePath!=""){
+                            $('#col_news_info').children('a').text( '附件: ' + res.datas[0].filePath);
+                            $("#col_news_info").children('a').attr('href', '/downFile?messageId='+res.datas[0].id)
+                        }
+                        if(res.datas[0].content!=undefined||res.datas[0].content!=null){
+                            $('#content').append("<p>" + res.datas[0].content + "</p>");
+                        }
+                    },
 
-
-					},
 		error:function(XMLHttpRequest, textStatus, errorThrown){
 		}
 			 });

@@ -25,7 +25,7 @@
     text-decoration: none;
     color: #324c69;
     font-size:17px;
-    width: 100px;
+    width: 94px;
     height: 80px;
     line-height: 80px;
     background: #fff;
@@ -66,7 +66,7 @@
 	display: block;
 	background: rgba(38, 135, 235, 0.86);
 	color: #fff;
-	width: 100px;
+	width: 94px;
 	font-size:15px;
 	font-weight: normal;
 }
@@ -146,11 +146,11 @@
 .frame_x h1{
  	text-align:center;
  	color: #123683;
- 	font-size:  30px;
+ 	font-size:  20px;
 }
 
 .frame_x h1 img{
- 	width: 30px;
+ 	width: 20px;
 }
 
 
@@ -181,11 +181,11 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	font-size: 1.5rem
+	font-size: 1.3rem;
 }
 
 .frame_x li span::before {
-	content: "▶";
+	content: "▶   ";
 	font-family: iconfont;
 	color: #123683;
 	padding-left: .3rem
@@ -195,22 +195,23 @@
 	display: block;
 	color: gray;
 	font-style: normal;
-	font-size: 1.5rem;
+	font-size: 1.2rem;
 	padding-left: 1.5rem;
 }
 
 
 .frame_x-more{
 	color: rgba(22, 67, 163, 0.51);
-	font-size: 20px;
 	font-weight: bold;
 	float: right;
 	margin: 15px 10px 10px auto;
 	cursor: pointer;
+	font-size: 12px;
 }
 .frame_x-more:hover{
 	color: #123683;
 	border-bottom: 1px solid #123683;
+
 }
 /********************主页框架frame_x结束*****************************/
 
@@ -482,7 +483,7 @@ footer {
 	text-align: center;
 	letter-spacing: 0;
 	font-family: "Arial Black";
-	font-size: 25px;
+	font-size: 15px;
 	padding-top: 50px;
 	clear: both;
 }
@@ -496,9 +497,9 @@ footer {
 	color: #123683;
 	border: 1px solid #0083cc;
 	background: #fff;
-	height: 40px;
-	line-height: 40px;
-	width: 40px;
+	height: 30px;
+	line-height: 30px;
+	width: 30px;
 }
 
  .page-list a:hover {
